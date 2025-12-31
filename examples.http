@@ -1,0 +1,51 @@
+### Create Specialisation (Required for Doctor)
+POST http://localhost:8000/api/specialisation
+Content-Type: application/json
+
+{
+  "name": "General Practice"
+}
+
+### Create Patient
+POST http://localhost:8000/api/patients
+Content-Type: application/json
+
+{
+  "first_name": "John",
+  "last_name": "Doe",
+  "date_of_birth": "1990-01-01",
+  "phone_number": "555-1234",
+  "email_address": "john.doe@example.com"
+}
+
+### Create Doctor
+POST http://localhost:8000/api/doctors
+Content-Type: application/json
+
+{
+  "first_name": "Dr",
+  "last_name": "Who",
+  "specialisation_ids": [1]
+}
+
+### Book Appointment
+POST http://localhost:8000/api/appointments
+Content-Type: application/json
+
+{
+  "patient_id": 1,
+  "doctor_id": 1,
+  "appointment_datetime": "2025-12-31T14:00:00Z",
+  "reason": "Annual Checkup"
+}
+
+### Create Bill
+POST http://localhost:8000/api/billing
+Content-Type: application/json
+
+{
+  "appointment_id": 1,
+  "amount": 100.00,
+  "bill_status_id": 1,
+  "payment_method_id": 1
+}

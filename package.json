@@ -1,0 +1,27 @@
+
+
+
+{
+  "name": "bonesclinic2",
+  "version": "1.0.0",
+  "description": "A Fracture Clinic API for orthopaedic clinics to manage patient records, fracture cases, and clinical data",
+  "author": "Michael Kachiwala <michaelkachiwalajr@gmail.com>",
+  "license": "MIT",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "dev": "bun --watch src/index.ts"
+},
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.2.1"
+  }
+}

@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Bone Clinic API — fast, secure, and reliable skeletal health data API." />
+  <title>BoneFupa API • Powering Health Apps</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#EF4444', // Red-500
+            primaryDark: '#B91C1C', // Red-700
+            secondary: '#1F2937', // Gray-800
+            darkBg: '#111827', // Gray-900
+            cardBg: '#1F2937', // Gray-800
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .hero-bg {
+      background-image: linear-gradient(rgba(17, 24, 39, 0.8), rgba(17, 24, 39, 0.9)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+
+<body class="bg-darkBg text-gray-100 antialiased selection:bg-primary selection:text-white">
+
+  <!-- NAV -->
+  <header class="fixed w-full z-50 bg-darkBg/90 backdrop-blur border-b border-gray-800 transition-all duration-300"
+    id="navbar">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2 group">
+        <div
+          class="w-10 h-10 bg-gradient-to-br from-primary to-red-600 rounded-lg flex items-center justify-center transform group-hover:scale-105 transition">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          </svg>
+        </div>
+        <span class="font-extrabold text-2xl tracking-tight text-white">Bone<span
+            class="text-primary">Fupa</span>API</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 font-medium">
+        <a href="#features" class="text-gray-300 hover:text-primary transition">Features</a>
+        <a href="#pricing" class="text-gray-300 hover:text-primary transition">Pricing</a>
+        <a href="/documentation" class="text-gray-300 hover:text-primary transition">Documentation</a>
+        <a href="#contact" class="text-gray-300 hover:text-primary transition">Support</a>
+      </nav>
+
+      <div class="hidden md:flex items-center gap-4">
+        <button id="getKeyBtn"
+          class="bg-primary hover:bg-red-600 text-white px-6 py-2.5 rounded-full font-bold shadow-lg shadow-red-900/20 transform hover:-translate-y-0.5 transition duration-200">Get
+          API Key</button>
+      </div>
+
+      <!-- Mobile Menu Btn -->
+      <button id="mobileBtn" class="md:hidden text-gray-300 hover:text-white">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Nav -->
+    <div id="mobileNav" class="md:hidden hidden bg-gray-900 border-t border-gray-800 absolute w-full">
+      <div class="px-6 py-4 flex flex-col gap-4">
+        <a href="#features" class="text-gray-300 font-medium">Features</a>
+        <a href="#pricing" class="text-gray-300 font-medium">Pricing</a>
+        <a href="/documentation" class="text-gray-300 font-medium">Documentation</a>
+        <a href="#contact" class="text-gray-300 font-medium">Support</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main>
+    <section class="hero-bg min-h-screen flex items-center pt-20 relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-t from-darkBg to-transparent pointer-events-none"></div>
+
+      <div class="max-w-7xl mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-900/30 border border-red-500/30 text-primary text-sm font-semibold mb-6 animate-pulse">
+            <span class="w-2 h-2 rounded-full bg-primary"></span> v2.0 Released
+          </div>
+          <h1 class="text-5xl md:text-7xl font-extrabold leading-tight mb-6 tracking-tight">
+            Build Powerful <br />
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-orange-500">Health Apps</span>
+          </h1>
+          <p class="text-xl text-gray-400 mb-8 max-w-lg leading-relaxed">
+            The high-performance REST API for clinic data, fracture risk models, and DEXA analytics. Built for
+            developers who demand speed.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href="#pricing"
+              class="px-8 py-4 rounded-full bg-primary hover:bg-red-600 text-white font-bold text-center shadow-lg shadow-red-900/40 transition transform hover:-translate-y-1">Start
+              Building Free</a>
+            <a href="/documentation"
+              class="px-8 py-4 rounded-full bg-gray-800 hover:bg-gray-700 text-white font-bold border border-gray-700 text-center transition">Read
+              Docs</a>
+          </div>
+
+          <div class="mt-10 flex items-center gap-6 text-gray-400">
+            <div class="flex -space-x-3">
+              <img class="w-10 h-10 rounded-full border-2 border-darkBg" src="https://i.pravatar.cc/100?img=11"
+                alt="Dev">
+              <img class="w-10 h-10 rounded-full border-2 border-darkBg" src="https://i.pravatar.cc/100?img=12"
+                alt="Dev">
+              <img class="w-10 h-10 rounded-full border-2 border-darkBg" src="https://i.pravatar.cc/100?img=13"
+                alt="Dev">
+            </div>
+            <div class="text-sm">Trusted by <strong class="text-white">500+</strong> developers</div>
+          </div>
+        </div>
+
+        <!-- Code Snippet Card -->
+        <div class="relative group hidden lg:block">
+          <div
+            class="absolute -inset-1 bg-gradient-to-r from-primary to-orange-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000">
+          </div>
+          <div class="relative bg-gray-900 border border-gray-800 rounded-2xl p-6 shadow-2xl">
+            <div class="flex items-center justify-between mb-4 border-b border-gray-800 pb-4">
+              <div class="flex gap-2">
+                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+              </div>
+              <span class="text-xs text-gray-500 font-mono">bash</span>
+            </div>
+            <pre class="font-mono text-sm overflow-x-auto text-gray-300">
+<span class="text-purple-400">const</span> response = <span class="text-purple-400">await</span> fetch(<span class="text-green-400">'/api/patients/1'</span>, {
+  headers: {
+    <span class="text-primary">'Authorization'</span>: <span class="text-green-400">'Bearer bone_key_123'</span>
+  }
+});
+
+<span class="text-gray-500">// Returns full health profile</span>
+<span class="text-purple-400">const</span> data = <span class="text-purple-400">await</span> response.json();
+console.log(data);
+</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features" class="py-24 bg-darkBg">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+          <h2 class="text-primary font-bold tracking-wider uppercase text-sm mb-3">Core Features</h2>
+          <h3 class="text-4xl font-extrabold text-white mb-4">Engineered for Performance</h3>
+          <p class="text-gray-400">Everything you need to build world-class health applications without the headache.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Feature 1 -->
+          <div
+            class="bg-gray-800/50 p-8 rounded-2xl border border-gray-700/50 hover:border-primary/50 transition duration-300 group">
+            <div
+              class="w-14 h-14 bg-gray-700 rounded-xl flex items-center justify-center mb-6 text-primary group-hover:bg-primary group-hover:text-white transition">
+              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z">
+                </path>
+              </svg>
+            </div>
+            <h4 class="text-xl font-bold text-white mb-3">Lightning Fast</h4>
+            <p class="text-gray-400 leading-relaxed">Sub-50ms response times guaranteed. Built on Bun for extreme
+              performance.</p>
+          </div>
+
+          <!-- Feature 2 -->
+          <div
+            class="bg-gray-800/50 p-8 rounded-2xl border border-gray-700/50 hover:border-primary/50 transition duration-300 group">
+            <div
+              class="w-14 h-14 bg-gray-700 rounded-xl flex items-center justify-center mb-6 text-primary group-hover:bg-primary group-hover:text-white transition">
+              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                </path>
+              </svg>
+            </div>
+            <h4 class="text-xl font-bold text-white mb-3">HIPAA Ready</h4>
+            <p class="text-gray-400 leading-relaxed">Enterprise-grade encryption at rest and in transit. Audit logs
+              included.</p>
+          </div>
+
+          <!-- Feature 3 -->
+          <div
+            class="bg-gray-800/50 p-8 rounded-2xl border border-gray-700/50 hover:border-primary/50 transition duration-300 group">
+            <div
+              class="w-14 h-14 bg-gray-700 rounded-xl flex items-center justify-center mb-6 text-primary group-hover:bg-primary group-hover:text-white transition">
+              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                </path>
+              </svg>
+            </div>
+            <h4 class="text-xl font-bold text-white mb-3">Scalable Metrics</h4>
+            <p class="text-gray-400 leading-relaxed">Batch processing for DEXA scans and real-time fracture risk
+              scoring.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" class="py-24 bg-gray-900 relative">
+      <div
+        class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10">
+      </div>
+      <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-extrabold text-white mb-4">Simple, Transparent Pricing</h2>
+          <p class="text-gray-400">Choose the plan that fits your growth.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <!-- Basic -->
+          <div
+            class="bg-gray-800 rounded-3xl p-8 border border-gray-700 flex flex-col hover:scale-105 transition duration-300">
+            <h3 class="text-xl font-bold text-white">Starter</h3>
+            <div class="my-4">
+              <span class="text-4xl font-extrabold text-white">$0</span><span class="text-gray-500">/mo</span>
+            </div>
+            <p class="text-sm text-gray-400 mb-8">Perfect for side projects and prototypes.</p>
+            <ul class="space-y-4 mb-8 flex-1">
+              <li class="flex items-center gap-3 text-sm text-gray-300"><svg class="w-5 h-5 text-green-500" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg> 1,000 reqs/mo</li>
+              <li class="flex items-center gap-3 text-sm text-gray-300"><svg class="w-5 h-5 text-green-500" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg> Community Support</li>
+            </ul>
+            <a href="#"
+              class="w-full block text-center py-3 rounded-xl bg-gray-700 text-white font-bold hover:bg-gray-600 transition">Get
+              Started</a>
+          </div>
+
+          <!-- Pro -->
+          <div
+            class="bg-gradient-to-b from-gray-800 to-gray-900 rounded-3xl p-8 border-2 border-primary relative flex flex-col transform md:-translate-y-4 shadow-2xl shadow-primary/20">
+            <div
+              class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
+              Popular</div>
+            <h3 class="text-xl font-bold text-white">Pro</h3>
+            <div class="my-4">
+              <span class="text-4xl font-extrabold text-white">$99</span><span class="text-gray-500">/mo</span>
+            </div>
+            <p class="text-sm text-gray-400 mb-8">For serious clinics and growing apps.</p>
+            <ul class="space-y-4 mb-8 flex-1">
+              <li class="flex items-center gap-3 text-sm text-gray-300"><svg class="w-5 h-5 text-primary" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg> 100k reqs/mo</li>
+              <li class="flex items-center gap-3 text-sm text-gray-300"><svg class="w-5 h-5 text-primary" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg> Priority Support</li>
+              <li class="flex items-center gap-3 text-sm text-gray-300"><svg class="w-5 h-5 text-primary" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg> Advanced Analytics</li>
+            </ul>
+            <a href="#"
+              class="w-full block text-center py-3 rounded-xl bg-primary text-white font-bold hover:bg-red-600 transition shadow-lg shadow-red-900/50">Start
+              Free Trial</a>
+          </div>
+
+          <!-- Enterprise -->
+          <div
+            class="bg-gray-800 rounded-3xl p-8 border border-gray-700 flex flex-col hover:scale-105 transition duration-300">
+            <h3 class="text-xl font-bold text-white">Scale</h3>
+            <div class="my-4">
+              <span class="text-4xl font-extrabold text-white">Custom</span>
+            </div>
+            <p class="text-sm text-gray-400 mb-8">Maximum performance and control.</p>
+            <ul class="space-y-4 mb-8 flex-1">
+              <li class="flex items-center gap-3 text-sm text-gray-300"><svg class="w-5 h-5 text-green-500" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg> Unlimited reqs</li>
+              <li class="flex items-center gap-3 text-sm text-gray-300"><svg class="w-5 h-5 text-green-500" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg> 24/7 Dedicated Support</li>
+              <li class="flex items-center gap-3 text-sm text-gray-300"><svg class="w-5 h-5 text-green-500" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg> On-premise Deployment</li>
+            </ul>
+            <a href="#contact"
+              class="w-full block text-center py-3 rounded-xl bg-white text-gray-900 font-bold hover:bg-gray-200 transition">Contact
+              Sales</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-24 bg-darkBg">
+      <div class="max-w-4xl mx-auto px-6 grid md:grid-cols-2 gap-12">
+        <div>
+          <h2 class="text-3xl font-bold text-white mb-4">Get in Touch</h2>
+          <p class="text-gray-400 mb-8">Ready to modernize your health stack? We're here to help.</p>
+
+          <div class="space-y-4">
+            <div class="flex items-center gap-4 text-gray-300">
+              <div class="w-10 h-10 rounded bg-gray-800 flex items-center justify-center text-primary"><svg
+                  class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                  </path>
+                </svg></div>
+              <span>support@bonefupaapi.com</span>
+            </div>
+          </div>
+        </div>
+
+        <form class="bg-gray-800 p-8 rounded-2xl border border-gray-700 shadow-xl">
+          <div class="mb-4">
+            <label class="block text-gray-400 text-sm font-bold mb-2">Email Address</label>
+            <input type="email"
+              class="w-full bg-gray-900 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition"
+              placeholder="john@clinic.com">
+          </div>
+          <div class="mb-6">
+            <label class="block text-gray-400 text-sm font-bold mb-2">Message</label>
+            <textarea
+              class="w-full bg-gray-900 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition"
+              rows="4" placeholder="Tell us about your project..."></textarea>
+          </div>
+          <button class="w-full bg-primary hover:bg-red-600 text-white font-bold py-3 rounded-lg transition">Send
+            Message</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 border-t border-gray-800 py-12">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-2">
+        <span class="font-extrabold text-xl text-white">Bone<span class="text-primary">Fupa</span></span>
+        <span class="text-gray-600 text-sm ml-2">© 2025 BoneFupa Inc.</span>
+      </div>
+      <div class="flex gap-6 text-sm text-gray-400">
+        <a href="#" class="hover:text-white transition">Privacy Policy</a>
+        <a href="#" class="hover:text-white transition">Terms of Service</a>
+        <a href="#" class="hover:text-white transition">Status</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL (API Key) -->
+  <div id="modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+    <div class="bg-gray-800 border border-gray-700 rounded-2xl max-w-md w-full p-8 shadow-2xl">
+      <h3 class="text-2xl font-bold text-white mb-2">Get API Access</h3>
+      <p class="text-gray-400 mb-6 text-sm">Join 500+ developers building the future of health.</p>
+      <form id="keyForm" class="space-y-4">
+        <input type="text" placeholder="Full Name"
+          class="w-full bg-gray-900 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary">
+        <input type="email" placeholder="Work Email"
+          class="w-full bg-gray-900 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary">
+        <div class="flex gap-3 mt-6">
+          <button type="submit"
+            class="flex-1 bg-primary hover:bg-red-600 text-white font-bold py-3 rounded-lg transition">Request
+            Key</button>
+          <button type="button" id="closeModal"
+            class="px-6 py-3 rounded-lg border border-gray-600 text-gray-300 hover:bg-gray-700 transition">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/index.js"></script>
+</body>
+
+</html>
