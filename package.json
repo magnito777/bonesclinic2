@@ -4,7 +4,7 @@
   "description": "A Fracture Clinic API for orthopaedic clinics to manage patient records, fracture cases, and clinical data",
   "author": "Michael Kachiwala <michaelkachiwalajr@gmail.com>",
   "license": "MIT",
-  "module": "index.ts",
+  "module": "index.js",
   "type": "module",
   "private": true,
   "scripts": {
