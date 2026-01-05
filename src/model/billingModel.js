@@ -1,4 +1,4 @@
-import db from '../databases/db';
+import db from '../databases/db.js';
 
 export async function listBills() {
   return await db.query(`SELECT b.*, a.appointment_datetime, p.first_name || ' ' || p.last_name AS patient_name, pm.name AS payment_method, bs.name AS bill_status

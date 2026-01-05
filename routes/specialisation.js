@@ -1,5 +1,5 @@
 import express from 'express';
-import * as specialisationController from '../src/controllers/specialisationController';
+import * as specialisationController from '../src/controllers/specialisationController.js';
 
 const router = express.Router();
 

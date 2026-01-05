@@ -1,5 +1,5 @@
 import express from 'express';
-import clinicalController from '../src/controllers/clinicalController';
+import clinicalController from '../src/controllers/clinicalController.js';
 
 console.log('Loading clinical routes...');
 const router = express.Router();

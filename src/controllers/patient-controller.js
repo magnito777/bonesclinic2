@@ -1,4 +1,4 @@
-import Patient from '../model/patientModel';
+import Patient from '../model/patientModel.js';
 /**
  * Patient controller - CRUD operations
  */

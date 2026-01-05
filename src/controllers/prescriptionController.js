@@ -1,4 +1,4 @@
-import Prescription from '../model/prescriptionModel';
+import Prescription from '../model/prescriptionModel.js';
 
 function removeNulls(obj) {
     return JSON.parse(JSON.stringify(obj, (key, value) => {

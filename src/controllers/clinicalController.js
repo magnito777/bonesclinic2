@@ -1,4 +1,4 @@
-import Clinical from '../model/clinicalModel';
+import Clinical from '../model/clinicalModel.js';
 
 function removeNulls(obj) {
     return JSON.parse(JSON.stringify(obj, (key, value) => {

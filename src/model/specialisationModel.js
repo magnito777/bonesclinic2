@@ -1,4 +1,4 @@
-import db from '../databases/db';
+import db from '../databases/db.js';
 
 export async function getAllSpecialisations() {
   return await db.query('SELECT * FROM specialisation ORDER BY name').all();

@@ -1,11 +1,11 @@
 import express from 'express';
-import patients from './patients';
-import doctors from './doctors';
-import appointments from './appointments';
-import billing from './billing';
-import specialisation from './specialisation';
-import prescription from './prescription';
-import clinical from './clinical';
+import patients from './patients.js';
+import doctors from './doctors.js';
+import appointments from './appointments.js';
+import billing from './billing.js';
+import specialisation from './specialisation.js';
+import prescription from './prescription.js';
+import clinical from './clinical.js';
 
 const router = express.Router();
 

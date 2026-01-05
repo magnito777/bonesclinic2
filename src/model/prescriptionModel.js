@@ -1,4 +1,4 @@
-import db from "../databases/db";
+import db from "../databases/db.js";
 
 async function getAllPrescriptions(search) {
     let sql = `

@@ -30,14 +30,14 @@ export const db = {
     return {
       all: async (...params) => {
         if (isPostgres) {
-          return await dbInstance(processedSql, params);
+          return await dbInstance.unsafe(processedSql, params);
         } else {
           return dbInstance.query(processedSql).all(...params);
         }
       },
       get: async (...params) => {
         if (isPostgres) {
-          const result = await dbInstance(processedSql, params);
+          const result = await dbInstance.unsafe(processedSql, params);
           return result[0];
         } else {
           return dbInstance.query(processedSql).get(...params);
@@ -45,7 +45,7 @@ export const db = {
       },
       run: async (...params) => {
         if (isPostgres) {
-          return await dbInstance(processedSql, params);
+          return await dbInstance.unsafe(processedSql, params);
         } else {
           return dbInstance.query(processedSql).run(...params);
         }
@@ -320,7 +320,7 @@ if (isPostgres) {
   const statements = initSql.split(';').filter(s => s.trim().length > 0);
   for (const statement of statements) {
     try {
-      await dbInstance(statement);
+      await dbInstance.unsafe(statement);
     } catch (e) {
       // Some statements like INSERT might fail if already exists but we have ON CONFLICT
       if (!statement.includes('INSERT')) {
