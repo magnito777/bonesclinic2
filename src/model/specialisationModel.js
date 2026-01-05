@@ -1,28 +1,26 @@
 import db from '../databases/db';
 
-export function getAllSpecialisations() {
-  return [...db.query('SELECT * FROM specialisation ORDER BY name')];
+export async function getAllSpecialisations() {
+  return await db.query('SELECT * FROM specialisation ORDER BY name').all();
 }
 
-export function getSpecialisationById(id) {
-  const rows = [...db.query('SELECT * FROM specialisation WHERE id = ?', [id])];
-  return rows[0];
+export async function getSpecialisationById(id) {
+  return await db.query('SELECT * FROM specialisation WHERE id = ?').get(id);
 }
 
-export function createSpecialisation({ name }) {
-  const info = db.prepare('INSERT INTO specialisation (name) VALUES (?)').run(name);
-  const id = info.lastInsertRowid;
-  return getSpecialisationById(id);
+export async function createSpecialisation({ name }) {
+  const res = await db.query('INSERT INTO specialisation (name) VALUES (?) RETURNING id').get(name);
+  return await getSpecialisationById(res.id);
 }
 
-export function updateSpecialisation(id, { name }) {
-  const info = db.prepare('UPDATE specialisation SET name = ? WHERE id = ?').run(name, id);
-  return info.changes > 0 ? getSpecialisationById(id) : null;
+export async function updateSpecialisation(id, { name }) {
+  await db.query('UPDATE specialisation SET name = ? WHERE id = ?').run(name, id);
+  return await getSpecialisationById(id);
 }
 
-export function deleteSpecialisation(id) {
-  const info = db.prepare('DELETE FROM specialisation WHERE id = ?').run(id);
-  return info.changes > 0;
+export async function deleteSpecialisation(id) {
+  await db.query('DELETE FROM specialisation WHERE id = ?').run(id);
+  return true;
 }
 
 

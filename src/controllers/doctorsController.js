@@ -1,34 +1,41 @@
 import * as doctorModel from '../model/doctorModel.js';
 
-export function list(req, res) {
-  res.json(doctorModel.getAllDoctors());
+function removeNulls(obj) {
+  return JSON.parse(JSON.stringify(obj, (key, value) => {
+    return value === null ? undefined : value;
+  }));
 }
 
-export function get(req, res) {
+export async function list(req, res) {
+  const { search } = req.query;
+  res.json(removeNulls(await doctorModel.getAllDoctors(search)));
+}
+
+export async function get(req, res) {
   const id = Number(req.params.id);
-  const row = doctorModel.getDoctorById(id);
+  const row = await doctorModel.getDoctorById(id);
   if (!row) return res.status(404).json({ message: 'Doctor not found' });
-  res.json(row);
+  res.json(removeNulls(row));
 }
 
-export function create(req, res) {
+export async function create(req, res) {
   const d = req.body;
   if (!d.first_name || !d.last_name) return res.status(400).json({ message: 'first_name and last_name required' });
-  const newRow = doctorModel.createDoctor(d, req.body.specialisation_ids || []);
+  const newRow = await doctorModel.createDoctor(d, req.body.specialisation_ids || []);
   res.status(201).json(newRow);
 }
 
-export function update(req, res) {
+export async function update(req, res) {
   const id = Number(req.params.id);
-  const row = doctorModel.getDoctorById(id);
+  const row = await doctorModel.getDoctorById(id);
   if (!row) return res.status(404).json({ message: 'Doctor not found' });
-  const updated = doctorModel.updateDoctor(id, req.body, req.body.specialisation_ids);
+  const updated = await doctorModel.updateDoctor(id, req.body, req.body.specialisation_ids);
   res.json(updated);
 }
 
-export function remove(req, res) {
+export async function remove(req, res) {
   const id = Number(req.params.id);
-  const ok = doctorModel.deleteDoctor(id);
+  const ok = await doctorModel.deleteDoctor(id);
   if (!ok) return res.status(404).json({ message: 'Doctor not found' });
   res.json({ message: 'Deleted' });
 }

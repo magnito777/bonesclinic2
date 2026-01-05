@@ -1,17 +1,17 @@
 import * as specialisationModel from '../model/specialisationModel.js';
 
-export function getAllSpecialisations(req, res) {
+export async function getAllSpecialisations(req, res) {
     try {
-        const specialisations = specialisationModel.getAllSpecialisations();
+        const specialisations = await specialisationModel.getAllSpecialisations();
         res.status(200).json(specialisations);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 }
 
-export function getSpecialisationById(req, res) {
+export async function getSpecialisationById(req, res) {
     try {
-        const specialisation = specialisationModel.getSpecialisationById(Number(req.params.id));
+        const specialisation = await specialisationModel.getSpecialisationById(Number(req.params.id));
         if (!specialisation) {
             return res.status(404).json({ message: 'Specialisation not found' });
         }
@@ -21,18 +21,18 @@ export function getSpecialisationById(req, res) {
     }
 }
 
-export function createSpecialisation(req, res) {
+export async function createSpecialisation(req, res) {
     try {
-        const specialisation = specialisationModel.createSpecialisation(req.body);
+        const specialisation = await specialisationModel.createSpecialisation(req.body);
         res.status(201).json(specialisation);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 }
 
-export function updateSpecialisation(req, res) {
+export async function updateSpecialisation(req, res) {
     try {
-        const specialisation = specialisationModel.updateSpecialisation(Number(req.params.id), req.body);
+        const specialisation = await specialisationModel.updateSpecialisation(Number(req.params.id), req.body);
         if (!specialisation) {
             return res.status(404).json({ message: 'Specialisation not found' });
         }
@@ -42,9 +42,9 @@ export function updateSpecialisation(req, res) {
     }
 }
 
-export function deleteSpecialisation(req, res) {
+export async function deleteSpecialisation(req, res) {
     try {
-        const success = specialisationModel.deleteSpecialisation(Number(req.params.id));
+        const success = await specialisationModel.deleteSpecialisation(Number(req.params.id));
         if (!success) {
             return res.status(404).json({ message: 'Specialisation not found' });
         }

@@ -1,6 +1,6 @@
 import db from '../databases/db';
 
-export function listAppointments(filters = {}) {
+export async function listAppointments(filters = {}) {
   const conditions = [];
   const params = [];
   if (filters.doctor_id) { conditions.push('doctor_id = ?'); params.push(filters.doctor_id); }
@@ -13,46 +13,47 @@ export function listAppointments(filters = {}) {
     LEFT JOIN appointment_status s ON s.id = a.status_id
     ${where}
     ORDER BY appointment_datetime DESC`;
-  return db.query(sql).all(...params);
+  return await db.query(sql).all(...params);
 }
 
-export function getAppointmentById(id) {
-  const rows = db.query('SELECT * FROM appointment WHERE id = ?').all(id);
-  return rows[0];
+export async function getAppointmentById(id) {
+  return await db.query('SELECT * FROM appointment WHERE id = ?').get(id);
 }
 
-export function createAppointment(a) {
-  const conflict = db.query('SELECT id FROM appointment WHERE doctor_id = ? AND appointment_datetime = ?').all(a.doctor_id, a.appointment_datetime);
+export async function createAppointment(a) {
+  const conflictSql = 'SELECT id FROM appointment WHERE doctor_id = ? AND appointment_datetime = ?';
+  const conflict = await db.query(conflictSql).all(a.doctor_id, a.appointment_datetime);
   if (conflict.length) return { error: 'conflict' };
-  const info = db.prepare('INSERT INTO appointment (patient_id, doctor_id, appointment_datetime, status_id, reason) VALUES (?, ?, ?, ?, ?)').run(a.patient_id, a.doctor_id, a.appointment_datetime, a.status_id ?? 1, a.reason ?? null);
-  const id = info.lastInsertRowid;
-  return getAppointmentById(id);
+
+  const sql = 'INSERT INTO appointment (patient_id, doctor_id, appointment_datetime, status_id, reason) VALUES (?, ?, ?, ?, ?) RETURNING id';
+  const res = await db.query(sql).get(a.patient_id, a.doctor_id, a.appointment_datetime, a.status_id ?? 1, a.reason ?? null);
+  return await getAppointmentById(res.id);
 }
 
-export function updateAppointmentStatus(id, status_id) {
-  const info = db.prepare('UPDATE appointment SET status_id = ? WHERE id = ?').run(status_id, id);
-  if (info.changes === 0) return null;
-  return getAppointmentById(id);
+export async function updateAppointmentStatus(id, status_id) {
+  const sql = 'UPDATE appointment SET status_id = ? WHERE id = ?';
+  await db.query(sql).run(status_id, id);
+  return await getAppointmentById(id);
 }
 
-export function addNote(appointment_id, notes, created_by) {
-  const info = db.prepare('INSERT INTO appointment_note (appointment_id, notes, created_by) VALUES (?, ?, ?)').run(appointment_id, notes, created_by ?? null);
-  const id = info.lastInsertRowid;
-  return db.query('SELECT * FROM appointment_note WHERE id = ?').get(id);
+export async function addNote(appointment_id, notes, created_by) {
+  const sql = 'INSERT INTO appointment_note (appointment_id, notes, created_by) VALUES (?, ?, ?) RETURNING id';
+  const res = await db.query(sql).get(appointment_id, notes, created_by ?? null);
+  return await db.query('SELECT * FROM appointment_note WHERE id = ?').get(res.id);
 }
 
-export function listNotes(appointment_id) {
-  return db.query('SELECT * FROM appointment_note WHERE appointment_id = ? ORDER BY created_at DESC').all(appointment_id);
+export async function listNotes(appointment_id) {
+  return await db.query('SELECT * FROM appointment_note WHERE appointment_id = ? ORDER BY created_at DESC').all(appointment_id);
 }
 
-export function addPrescription(appointment_id, data) {
-  const info = db.prepare('INSERT INTO prescription (prescribed_appointment_id, medicine_name, dosage, frequency, instructions, created_by) VALUES (?, ?, ?, ?, ?, ?)').run(appointment_id, data.medicine_name, data.dosage ?? null, data.frequency ?? null, data.instructions ?? null, data.created_by ?? null);
-  const id = info.lastInsertRowid;
-  return db.query('SELECT * FROM prescription WHERE id = ?').get(id);
+export async function addPrescription(appointment_id, data) {
+  const sql = 'INSERT INTO prescription (prescribed_appointment_id, medicine_name, dosage, frequency, instructions, created_by) VALUES (?, ?, ?, ?, ?, ?) RETURNING id';
+  const res = await db.query(sql).get(appointment_id, data.medicine_name, data.dosage ?? null, data.frequency ?? null, data.instructions ?? null, data.created_by ?? null);
+  return await db.query('SELECT * FROM prescription WHERE id = ?').get(res.id);
 }
 
-export function listPrescriptions(appointment_id) {
-  return db.query('SELECT * FROM prescription WHERE prescribed_appointment_id = ? ORDER BY created_at DESC').all(appointment_id);
+export async function listPrescriptions(appointment_id) {
+  return await db.query('SELECT * FROM prescription WHERE prescribed_appointment_id = ? ORDER BY created_at DESC').all(appointment_id);
 }
 
 const Appointment = {

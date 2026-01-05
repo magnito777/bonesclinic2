@@ -13,9 +13,14 @@ Content-Type: application/json
 {
   "first_name": "John",
   "last_name": "Doe",
+  "gender": "Male",
   "date_of_birth": "1990-01-01",
   "phone_number": "555-1234",
-  "email_address": "john.doe@example.com"
+  "email_address": "john.doe@example.com",
+  "address_line1": "123 Main St",
+  "address_line2": "Apt 4B",
+  "state": "CA",
+  "country": "USA"
 }
 
 ### Create Doctor
@@ -49,3 +54,69 @@ Content-Type: application/json
   "bill_status_id": 1,
   "payment_method_id": 1
 }
+
+### Search Patient by Name
+GET http://localhost:8000/api/patients?search=John
+
+### Search Doctor by Name
+GET http://localhost:8000/api/doctors?search=Who
+
+### Create Prescription
+POST http://localhost:8000/api/prescriptions
+Content-Type: application/json
+
+{
+  "prescribed_appointment_id": 1,
+  "medicine_name": "Paracetamol",
+  "dosage": "500mg",
+  "frequency": "Twice a day",
+  "instructions": "Take after meals",
+  "created_by": 1
+}
+
+### List Prescriptions
+GET http://localhost:8000/api/prescriptions
+
+### Search Prescriptions
+GET http://localhost:8000/api/prescriptions?search=Para
+
+### Record Vital Signs
+POST http://localhost:8000/api/clinical/vitals
+Content-Type: application/json
+
+{
+  "patient_id": 1,
+  "appointment_id": 1,
+  "temperature": 36.6,
+  "blood_pressure_systolic": 120,
+  "blood_pressure_diastolic": 80,
+  "heart_rate": 72,
+  "created_by": 1
+}
+
+### List Vitals for Patient
+GET http://localhost:8000/api/clinical/vitals/patient/1
+
+### Diagnostic Test (Is Clinical Router Active?)
+GET http://localhost:8000/api/clinical/test
+
+### List All Vitals
+GET http://localhost:8000/api/clinical/vitals
+
+### Add Clinical Note
+POST http://localhost:8000/api/clinical/notes
+Content-Type: application/json
+
+{
+  "appointment_id": 1,
+  "notes": "Patient reports mild joint pain in the morning.",
+  "created_by": 1
+}
+
+### List Notes for Patient
+GET http://localhost:8000/api/clinical/notes/patient/1
+
+### List All Clinical Notes
+GET http://localhost:8000/api/clinical/notes
+
+

@@ -4,25 +4,32 @@ import Patient from '../model/patientModel';
  */
 
 async function createPatient(req, res) {
-  const patient = req.body;
-  try {
-      const newPatient = await Patient.createPatient(patient);
-      res.status(201).json(newPatient);
-  } catch (error) {
-      res.status(500).json({ message: 'Error creating patient', error: error.message });
-  }
+    const patient = req.body;
+    try {
+        const newPatient = await Patient.createPatient(patient);
+        res.status(201).json(newPatient);
+    } catch (error) {
+        res.status(500).json({ message: 'Error creating patient', error: error.message });
+    }
+}
+
+function removeNulls(obj) {
+    return JSON.parse(JSON.stringify(obj, (key, value) => {
+        return value === null ? undefined : value;
+    }));
 }
 
 async function getPatients(req, res) {
     try {
-        const patients = await Patient.getPatients();
-        res.json(patients);
+        const { search } = req.query;
+        const patients = await Patient.getPatients(search);
+        res.json(removeNulls(patients));
     }
     catch (error) {
         res.status(500).json({ message: 'Error retrieving patients', error: error.message });
     }
-    
-       
+
+
 }
 
 async function getPatientById(req, res) {
@@ -32,11 +39,10 @@ async function getPatientById(req, res) {
         if (!patient) {
             return res.status(404).json({ message: 'Patient not found' });
         }
-        res.json(patient);
+        res.json(removeNulls(patient));
     } catch (error) {
         res.status(500).json({ message: 'Error retrieving patient', error: error.message });
     }
-   
 }
 
 async function updatePatient(req, res) {
@@ -59,7 +65,7 @@ async function deletePatient(req, res) {
     } catch (error) {
         res.status(500).json({ message: 'Error deleting patient', error: error.message });
     }
-} 
+}
 
 
 const patientsController = {
